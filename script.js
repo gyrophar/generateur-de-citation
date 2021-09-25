@@ -7,21 +7,20 @@ const loader = document.getElementById('loader');
 
 let apiQuotes = [];
 
-// montrer que nous chargeons la page
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 
-// cacher le chargement
-function complete() {
+
+function removeLoadingSpinner() {
     quoteContainer.hidden = false;
     loader.hidden = true;
 }
 
 //montre la nouvelle citation
 function newQuote() {
-    loading();
+    showLoadingSpinner();
     //choisir une citation aleatoire à partir de l'array ApiQuotes
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
     // verifier si le champs "auteur" est vide, et le remplacer par "unknown"
@@ -37,13 +36,13 @@ function newQuote() {
         quoteText.classList.remove("long-quote");
     }
     // afficher la citation et cacher le loader
-    complete();
+    removeLoadingSpinner();
     quoteText.textContent = quote.text;
 }
 
 // Obtenir les citations depuis d'API
 async function getQuotes() {
-    loading();
+    showLoadingSpinner();
     const apiUrl = 'https://type.fit/api/quotes';
     try {
         const response = await fetch(apiUrl);
